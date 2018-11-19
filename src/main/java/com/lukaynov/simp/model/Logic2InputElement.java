@@ -15,6 +15,8 @@ import lombok.Data;
 @Builder
 public class Logic2InputElement implements LogicElement {
 
+   private String name;
+
    private Element firstInputElement;
    private Element secondInputElement;
 

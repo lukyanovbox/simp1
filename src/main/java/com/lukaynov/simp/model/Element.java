@@ -6,4 +6,8 @@ import java.util.List;
 public interface Element {
 
    List<List<ElementValue>> executeStateFuncNested(boolean i);
+
+   String getName();
+
+   void setName(String name);
 }
