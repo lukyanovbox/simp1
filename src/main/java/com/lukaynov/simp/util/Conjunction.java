@@ -23,4 +23,9 @@ public class Conjunction {
 
       return result;
    }
+
+   public static List<List<ElementValue>> conj(List<List<ElementValue>> first, List<List<ElementValue>> second,
+         List<List<ElementValue>> third) {
+      return conj(conj(first, second), third);
+   }
 }

@@ -1,5 +1,6 @@
 package com.lukaynov.simp;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,14 +14,17 @@ public class Application {
       ExampleConfig exampleConfig = new ExampleConfig();
 
 
-      List<List<ElementValue>> result = exampleConfig.generateConditions("F3", true);
+      List<List<ElementValue>> result = exampleConfig.generateConditions("F2", true);
 
 
-
-      System.out.println(result.get(0).stream().map(ElementValue::getName).collect(Collectors.joining("| ")));
+      System.out.println(result.get(0).stream()
+            .sorted(Comparator.comparing(ElementValue::getName))
+            .map(ElementValue::getName).collect(Collectors.joining("| ")));
 //      System.out.println();
       result.forEach(line ->
-            System.out.println(line.stream().map(ElementValue::getValue).map(Object::toString)
+            System.out.println(line.stream()
+                  .sorted(Comparator.comparing(ElementValue::getName))
+                  .map(ElementValue::getValue).map(Object::toString)
                   .collect(Collectors.joining(" | "))));
    }
 }
