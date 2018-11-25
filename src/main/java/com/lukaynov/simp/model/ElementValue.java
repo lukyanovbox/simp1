@@ -11,7 +11,7 @@ public class ElementValue {
    boolean value;
 
 
-   public int getValue() {
+   public int getIntValue() {
       return value ? 1 : 0;
    }
 

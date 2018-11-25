@@ -70,7 +70,7 @@ public class Logic2InputElement implements LogicElement {
 
          }
       }
-      else {
+      else if (operation == Operation.OR) {
          if (i) {
             leftElements = firstInputElement.executeStateFuncNested(true);
             rightElements = secondInputElement.executeStateFuncNested(true);
@@ -92,6 +92,28 @@ public class Logic2InputElement implements LogicElement {
 
          }
       }
+      else {
+         if (i) {
+            leftElements = firstInputElement.executeStateFuncNested(true);
+            rightElements = secondInputElement.executeStateFuncNested(false);
+            resultElements.addAll(conj(leftElements, rightElements));
+
+            leftElements = firstInputElement.executeStateFuncNested(false);
+            rightElements = secondInputElement.executeStateFuncNested(true);
+            resultElements.addAll(conj(leftElements, rightElements));
+
+         }
+         else {
+            leftElements = firstInputElement.executeStateFuncNested(true);
+            rightElements = secondInputElement.executeStateFuncNested(true);
+            resultElements.addAll(conj(leftElements, rightElements));
+
+            leftElements = firstInputElement.executeStateFuncNested(false);
+            rightElements = secondInputElement.executeStateFuncNested(false);
+            resultElements.addAll(conj(leftElements, rightElements));
+
+         }
+      }
 
       return resultElements;
 
@@ -101,22 +123,25 @@ public class Logic2InputElement implements LogicElement {
       List<List<ElementValue>> resultElements = new ArrayList<>();
       List<List<ElementValue>> nestedResultsElements = new ArrayList<>();
 
+      Element executableElement;
       if (fromElement.equals(firstInputElement)) {
-         if (operation == Operation.AND) {
-            nestedResultsElements = secondInputElement.executeStateFuncNested(true);
-         }
-         else {
-            nestedResultsElements = secondInputElement.executeStateFuncNested(false);
-         }
+         executableElement = secondInputElement;
       }
       else {
-         if (operation == Operation.AND) {
-            nestedResultsElements = firstInputElement.executeStateFuncNested(true);
-         }
-         else {
-            nestedResultsElements = firstInputElement.executeStateFuncNested(false);
-         }
+         executableElement = firstInputElement;
       }
+
+      if (operation == Operation.AND) {
+         nestedResultsElements = executableElement.executeStateFuncNested(true);
+      }
+      else if (operation == Operation.OR) {
+         nestedResultsElements = executableElement.executeStateFuncNested(false);
+      }
+      else {
+         nestedResultsElements = executableElement.executeStateFuncNested(true);
+         nestedResultsElements.addAll(executableElement.executeStateFuncNested(false));
+      }
+
       resultElements = conj(nestedResultsElements, combinations);
 
       if (nextElement == null) {
