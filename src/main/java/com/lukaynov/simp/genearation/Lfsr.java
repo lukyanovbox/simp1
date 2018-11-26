@@ -60,7 +60,7 @@ public class Lfsr {
    public void findConditionForMinTactsCoverageAndPrint(Set<List<Boolean>> faultTestConditions) {
       List<List<Boolean>> startSequences = generateSequences();
 
-      int minimalMaxTact = Integer.MAX_VALUE;
+      int minimalMaxTactIndex = Integer.MAX_VALUE;
       List<Boolean> resultStartSequence = new ArrayList<>();
 
       for (List<Boolean> startSequence : startSequences) {
@@ -74,13 +74,13 @@ public class Lfsr {
             }
          }
 
-         if (maxTactPerStartSequence < minimalMaxTact) {
-            minimalMaxTact = maxTactPerStartSequence;
+         if (maxTactPerStartSequence < minimalMaxTactIndex) {
+            minimalMaxTactIndex = maxTactPerStartSequence;
             resultStartSequence = startSequence;
          }
       }
 
-      System.out.println(format("max tact %s ", minimalMaxTact));
+      System.out.println(format("max tact %s ", minimalMaxTactIndex + 1));
       System.out.println(format("Start condition:  %s",
             resultStartSequence.stream().map(v -> v ? "1" : "0").collect(Collectors.joining(", "))));
    }
